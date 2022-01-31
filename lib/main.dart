@@ -1,31 +1,60 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_example/Data/Models/news.dart';
+import 'package:hive_example/Data/Models/source.dart';
 import 'package:hive_example/Domain/news_view_models.dart';
 import 'package:hive_example/Presentation/home_news.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
-
-void main() {
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Directory appDocumentDir = await getApplicationDocumentsDirectory();
+   Hive.init(appDocumentDir.path);
+  Hive.registerAdapter(ArticlesAdapter());
+  Hive.registerAdapter(SourceAdapter());
+  runApp( MyApp());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  @override
+  _State createState() => _State();
+}
 
-  // This widget is the root of your application.
+class _State extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return  MultiProvider(
+    return MultiProvider(
       providers: [
-        ChangeNotifierProvider<NewsViewModel>(create:(_)=>NewsViewModel()),
+        ChangeNotifierProvider<NewsViewModel>(create: (_) => NewsViewModel()),
       ],
       child: MaterialApp(
         title: 'HiveDemo',
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: HomeNews(),
+        home: FutureBuilder(
+          future: Hive.openBox('News'),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else {
+                return HomeNews();
+              }
+            } else {
+              return const Center(child: CircularProgressIndicator());
+            }
+          },
+        ),
       ),
     );
   }
+  @override
+  void dispose() {
+    Hive.close();
+    super.dispose();
+  }
 }
-
-
