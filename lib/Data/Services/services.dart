@@ -1,26 +1,22 @@
 import 'dart:convert';
+import 'package:hive_example/Data/Models/approved_detais.dart';
 import 'package:hive_example/Data/Models/news.dart';
 import 'package:http/http.dart' as http;
+
 class ApiService {
-  final endPointUrl = "newsapi.org";
-  final client = http.Client();
-  Future<List<Articles>?> getArticle() async {
-    final queryParameters = {
-      'country': 'us',
-      'category': 'technology',
-      'apiKey': 'c3ab767b13784ba1a5ff5a7885b566a1'
-    };
+   final client = http.Client();
+  Future<List<GetApprovedDetailsObjct>?> getClients() async {
     try {
-      final uri = Uri.https(endPointUrl, '/v2/top-headlines', queryParameters);
-      final response = await client.get(uri);
+      final response = await client.get(Uri.parse("http://mapp.yemensoft.net/WEBONYXMOBILEV2/Service1.svc/GetApprovedDetails?YearNo=2021&ActvieNo=1&P_USR_NO=1&P_DOC_TYP=53&P_APPRVD=0&P_LVL_NO=NULL&P_F_DOC_NO=NULL&P_T_DOC_NO=NULL&P_F_DOC_DATE=NULL&P_T_DOC_DATE=NULL&DOC_SER=&Lang_No=1&op_type=1"));
+      print("[SentUrl]");
       print("[response][body]${json.decode(response.body)}");
-      if(response.statusCode==200) {
-        Aticles articlesData = Aticles.fromJson(json.decode(response.body));
-        return articlesData.articles;
-      }else{
+      if (response.statusCode == 200) {
+        // Aticles articlesData = Aticles.fromJson(json.decode(response.body));
+        // return articlesData.articles;
+      } else {
         return [];
       }
-    }catch(e){
+    } catch (e) {
       print("ErrorIs${e.toString()}");
       return [];
     }

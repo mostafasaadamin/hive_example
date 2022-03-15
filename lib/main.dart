@@ -1,16 +1,21 @@
 import 'dart:io';
-
+import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_example/Data/Models/news.dart';
 import 'package:hive_example/Data/Models/source.dart';
 import 'package:hive_example/Domain/news_view_models.dart';
-import 'package:hive_example/Presentation/home_news.dart';
+import 'package:hive_example/Presentation/home_details.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
+
+import 'Presentation/splash_screen.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  ///for dev
+  HttpOverrides.global =  MyHttpOverrides();
   Directory appDocumentDir = await getApplicationDocumentsDirectory();
    Hive.init(appDocumentDir.path);
   Hive.registerAdapter(ArticlesAdapter());
@@ -28,26 +33,29 @@ class _State extends State<MyApp> {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider<NewsViewModel>(create: (_) => NewsViewModel()),
+        ChangeNotifierProvider<ClientsViewModel>(create: (_) => ClientsViewModel()),
       ],
-      child: MaterialApp(
-        title: 'HiveDemo',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: FutureBuilder(
-          future: Hive.openBox('News'),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.hasError) {
-                return Text(snapshot.error.toString());
+      child: ScreenUtilInit(
+        builder:()=> MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Ultimate Solution',
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+          ),
+          home: FutureBuilder(
+            future: Hive.openBox('Clients'),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.hasError) {
+                  return Text(snapshot.error.toString());
+                } else {
+                  return SplashScreen();
+                }
               } else {
-                return HomeNews();
+                return const Center(child: CircularProgressIndicator());
               }
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+            },
+          ),
         ),
       ),
     );
@@ -56,5 +64,12 @@ class _State extends State<MyApp> {
   void dispose() {
     Hive.close();
     super.dispose();
+  }
+}
+class MyHttpOverrides extends HttpOverrides{
+  @override
+  HttpClient createHttpClient(SecurityContext? context){
+    return super.createHttpClient(context)
+      ..badCertificateCallback = (X509Certificate cert, String host, int port)=> true;
   }
 }

@@ -1,35 +1,34 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
+import 'package:hive_example/Data/Models/approved_detais.dart';
 import 'package:hive_example/Data/Models/news.dart';
 import 'package:hive_example/Data/Services/services.dart';
 
-class NewsViewModel extends ChangeNotifier {
-  List<Articles>? _newsList = [];
+class ClientsViewModel extends ChangeNotifier {
+  List<GetApprovedDetailsObjct>? _clientList = [];
   String? _errorMessage = "";
-
   String? get errorMessage => _errorMessage;
+  List<GetApprovedDetailsObjct>? get clientsList => _clientList;
 
-  List<Articles>? get newsList => _newsList;
-
-  getNewsListData() async {
+  getClientsData() async {
     bool isConnected = await isInternet();
     if (isConnected) {
-      _newsList = await ApiService().getArticle();
+      _clientList = await ApiService().getClients();
     } else {
       ///Load data From Hive Cashed if it exists
-      final contactsBox = Hive.box('News');
-      for (int i = 0; i < contactsBox.length; i++) {
-        Articles article = contactsBox.get(i) as Articles;
-        _newsList!.add(article);
-      }
+      // final contactsBox = Hive.box('News');
+      // for (int i = 0; i < contactsBox.length; i++) {
+      //   Articles article = contactsBox.get(i) as Articles;
+      //   _clientList!.add(article);
+      // }
     }
-    if (_newsList!.isEmpty) {
-      _errorMessage = "An error happened";
-    } else if(isConnected) {
-      insertIntoHive(_newsList);
-      ///insert data into hive
-    }
+    // if (_newsList!.isEmpty) {
+    //   _errorMessage = "An error happened";
+    // } else if(isConnected) {
+    //   insertIntoHive(_newsList);
+    //   ///insert data into hive
+    // }
     notifyListeners();
   }
 
@@ -45,10 +44,11 @@ class NewsViewModel extends ChangeNotifier {
   }
 
   void insertIntoHive(List<Articles>? newsList) {
-    final contactsBox = Hive.box('News');
-    contactsBox.clear();
-    for (int i = 0; i < _newsList!.length; i++) {
-      contactsBox.add(_newsList![i]);
-    }
+    // final contactsBox = Hive.box('News');
+    // contactsBox.clear();
+    // for (int i = 0; i < _newsList!.length; i++) {
+    //   contactsBox.add(_newsList![i]);
+    // }
   }
+
 }
