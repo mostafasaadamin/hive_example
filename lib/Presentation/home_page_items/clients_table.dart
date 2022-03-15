@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:hive_example/Data/Models/approved_detais.dart';
 import 'package:data_table_2/data_table_2.dart';
-
 class ClientsTable extends StatelessWidget {
   List<GetApprovedDetailsObjct>clientsData;
   ClientsTable({required this.clientsData});

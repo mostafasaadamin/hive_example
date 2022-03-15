@@ -3,7 +3,7 @@ import 'package:hive_example/Data/Models/approved_detais.dart';
 import 'package:hive_example/Data/Models/news.dart';
 import 'package:http/http.dart' as http;
 
-class ApiService {
+class ClientsService {
    final client = http.Client();
   Future<List<GetApprovedDetailsObjct>?> getClients() async {
     try {

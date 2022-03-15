@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_example/Data/Models/approved_detais.dart';
 import 'package:hive_example/Data/Models/news.dart';
-import 'package:hive_example/Data/Services/services.dart';
+import 'package:hive_example/Data/Services/clients_services.dart';
 
 class ClientsViewModel extends ChangeNotifier {
   List<GetApprovedDetailsObjct>? _clientList = [];
@@ -14,7 +14,7 @@ class ClientsViewModel extends ChangeNotifier {
   getClientsData() async {
     bool isConnected = await isInternet();
     if (isConnected) {
-      _clientList = await ApiService().getClients();
+      _clientList = await ClientsService().getClients();
     } else {
       ///Load data From Hive Cashed if it exists
       // final contactsBox = Hive.box('News');

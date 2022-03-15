@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_example/Data/Models/NameOne.dart';
-import 'package:hive_example/Domain/news_view_models.dart';
+import 'package:hive_example/Domain/clients_view_models.dart';
 import 'package:provider/provider.dart';
 import 'package:data_table_2/data_table_2.dart';
 
@@ -13,20 +13,12 @@ class HomeDetails extends StatefulWidget {
 }
 
 class _HomeNewsState extends State<HomeDetails> {
-  List<NameOne> namelist = [];
-  late ClientsViewModel newsModel;
-
+  late ClientsViewModel clientsModel;
   @override
   void initState() {
-    namelist.add(NameOne(
-        sn: "1", name: "Name 1", address: "Address 1", phone: "Phone 1"));
-    namelist.add(NameOne(
-        sn: "2", name: "Name 2", address: "Address 2", phone: "Phone 2"));
-    namelist.add(NameOne(
-        sn: "3", name: "Name 3", address: "Address 3", phone: "Phone 3"));
-    newsModel = Provider.of<ClientsViewModel>(context, listen: false);
+    clientsModel = Provider.of<ClientsViewModel>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      newsModel.getClientsData();
+      clientsModel.getClientsData();
     });
     super.initState();
   }
