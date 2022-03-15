@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_example/Data/Models/clients.dart';
 import 'package:hive_example/Domain/clients_view_models.dart';
-import 'package:hive_example/Presentation/home_details.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 

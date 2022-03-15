@@ -21,7 +21,9 @@ class _HomeNewsState extends State<HomeDetails> {
   void initState() {
     clientsModel = Provider.of<ClientsViewModel>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      clientsModel.getClientsData(startDate,endDate);
+      Future.delayed(const Duration(milliseconds: 500), () {
+        clientsModel.getClientsFromHive(startDate,endDate);
+      });
     });
     super.initState();
   }
@@ -62,6 +64,7 @@ class _HomeNewsState extends State<HomeDetails> {
                   :ClientsTable(clientsData: model.clientsList!);
         }));
   }
+
   showDatePickerDialog() {
     showDialog(builder: (context) =>  AlertDialog(
         shape: const RoundedRectangleBorder(
@@ -119,9 +122,8 @@ class _HomeNewsState extends State<HomeDetails> {
                 borderRadius: BorderRadius.circular(5)),
             color:Colors.blue,
             onPressed: () {
-              clientsModel.getClientsData(startDate,endDate);
               Navigator.of(context).pop();
-
+              clientsModel.getClientsData(startDate,endDate);
             },
           ),
           FlatButton(
