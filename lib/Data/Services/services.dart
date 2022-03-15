@@ -11,8 +11,8 @@ class ApiService {
       print("[SentUrl]");
       print("[response][body]${json.decode(response.body)}");
       if (response.statusCode == 200) {
-        // Aticles articlesData = Aticles.fromJson(json.decode(response.body));
-        // return articlesData.articles;
+        ApprovedDetails clientsDetails = ApprovedDetails.fromJson(json.decode(response.body));
+        return clientsDetails.lGetApprovedDetailsObjct;
       } else {
         return [];
       }
