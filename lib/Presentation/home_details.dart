@@ -21,7 +21,7 @@ class _HomeNewsState extends State<HomeDetails> {
   void initState() {
     clientsModel = Provider.of<ClientsViewModel>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
-      Future.delayed(const Duration(milliseconds: 500), () {
+      Future.delayed(const Duration(seconds: 1), () {
         clientsModel.getClientsFromHive(startDate,endDate);
       });
     });

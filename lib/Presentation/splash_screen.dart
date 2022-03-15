@@ -4,8 +4,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive_example/Domain/use_cases/hive_operation.dart';
 
 import 'home_details.dart';
+import 'login_screen/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -20,10 +22,12 @@ class _SplashScreenState extends State<SplashScreen> {
   }
   @override
   void initState() {
+    HiveOperations.getInstance().addUser();
     Timer(Duration(seconds: 4),
             () => {
+
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) =>
-                  HomeDetails()))
+                  LoginScreen()))
               // Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context) =>
               //     HomeDetails()), (Route<dynamic> route) => false),
         });

@@ -36,7 +36,7 @@ class _State extends State<MyApp> {
       child: ScreenUtilInit(
         builder:()=> MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'Ultimate Solution',
+          title: 'Ultimate',
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
