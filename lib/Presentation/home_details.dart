@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_example/Domain/clients_view_models.dart';
+import 'package:hive_example/Domain/connective_view_model.dart';
 import 'package:hive_example/Domain/use_cases/hive_operation.dart';
 import 'package:provider/provider.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
@@ -21,6 +22,7 @@ class _HomeNewsState extends State<HomeDetails> {
 
   @override
   void initState() {
+    Connection.getInstance().checkInternetConnection(context);
     clientsModel = Provider.of<ClientsViewModel>(context, listen: false);
     WidgetsBinding.instance!.addPostFrameCallback((_) {
       Future.delayed(const Duration(seconds: 1), () {
@@ -70,7 +72,9 @@ class _HomeNewsState extends State<HomeDetails> {
                         model.clientsList![index].aPPRVD = 1;
                         HiveOperations.getInstance().updateClientsApproved(
                             index, model.clientsList![index]);
-                        clientsModel.getClientsFromHive(startDate, endDate);
+                        model.clientsList![index].aPPRVD=1;
+                        setState(() {});
+                        // clientsModel.getClientsFromHive(startDate, endDate);
                       },
                     );
         }));

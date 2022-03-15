@@ -51,6 +51,7 @@ dev_dependencies:
   flutter_screenutil: ^5.3.1
   data_table_2: ^2.2.1
   syncfusion_flutter_datepicker: ^19.4.56
+  lottie: ^1.2.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

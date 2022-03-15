@@ -114,7 +114,7 @@ class _LoginPageState extends State<LoginScreen> {
                         child: Column(
                           children: [
                             GeneralEditText(
-                              labelText: "phone",
+                              labelText: "رقم الهاتف",
                               fontFamily: "dinmedium",
                               hint: "01*********",
                               labelColor: eitTextColor,

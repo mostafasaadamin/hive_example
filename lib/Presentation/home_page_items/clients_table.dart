@@ -56,9 +56,7 @@ class ClientsTable extends StatelessWidget {
                      onUpdate(index);
                     }:(){},
                   ),
-
                 ),
-
               ]))),
     );
   }
