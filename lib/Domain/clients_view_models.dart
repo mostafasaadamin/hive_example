@@ -11,10 +11,16 @@ class ClientsViewModel extends ChangeNotifier {
   String? get errorMessage => _errorMessage;
   List<GetApprovedDetailsObjct>? get clientsList => _clientList;
 
-  getClientsData() async {
+  getClientsData(String startData,String endDate) async {
+    _clientList!.clear();
+    _errorMessage="";
+    notifyListeners();
     bool isConnected = await isInternet();
     if (isConnected) {
-      _clientList = await ClientsService().getClients();
+      _clientList = await ClientsService().getClients(startData,endDate);
+      if(_clientList!.isEmpty){
+        _errorMessage="لا يوجد عملاء في الفترة المختارة";
+      }
     } else {
       ///Load data From Hive Cashed if it exists
       // final contactsBox = Hive.box('News');
