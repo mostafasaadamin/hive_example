@@ -10,6 +10,7 @@ import 'package:hive_example/elements/general_text_view.dart';
 import 'package:provider/provider.dart';
 
 import '../home_details.dart';
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -21,16 +22,15 @@ class _LoginPageState extends State<LoginScreen> {
   TextEditingController passwordController = TextEditingController();
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   var _formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
-    phoneController.text="01225253408";
-    passwordController.text="123456";
+    phoneController.text = "01225253408";
+    passwordController.text = "123456";
     super.initState();
   }
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: scaffoldKey,
       resizeToAvoidBottomInset: true,
@@ -45,20 +45,19 @@ class _LoginPageState extends State<LoginScreen> {
                 right: ScreenUtil().setWidth(9.75),
                 top: ScreenUtil().setWidth(89.44),
                 left: ScreenUtil().setWidth(9.75),
-                child:Row(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     GeneralTextView(
-                      color:Color(0xff20154B) ,
-                      fontSize:25.sp ,
-                      isBold:false ,
+                      color: Color(0xff20154B),
+                      fontSize: 25.sp,
+                      isBold: false,
                       fontFamily: "din",
-                      text:"Ultimate Solution" ,
+                      text: "Ultimate Solution",
                       overflow: false,
                     ),
                   ],
                 ),
-
               ),
               Positioned(
                   left: ScreenUtil().setWidth(20.5),
@@ -79,7 +78,7 @@ class _LoginPageState extends State<LoginScreen> {
                                       style: TextStyle(
                                           fontSize: ScreenUtil().setSp(20),
                                           fontFamily: "dinBold",
-                                          color:  Color(0xff20154B)),
+                                          color: Color(0xff20154B)),
                                     ),
                                     TextSpan(
                                         text: "Ultimate Solution",
@@ -98,11 +97,12 @@ class _LoginPageState extends State<LoginScreen> {
                         height: ScreenUtil().setHeight(7),
                       ),
                       GeneralTextView(
-                        color:Color(0xff9F9F9F) ,
-                        fontSize:13.sp ,
-                        isBold:false ,
+                        color: Color(0xff9F9F9F),
+                        fontSize: 13.sp,
+                        isBold: false,
                         fontFamily: "din",
-                        text:"الرجاء ادخال رقم الهاتف والباسورد لاتمام التسجيل" ,
+                        text:
+                            "الرجاء ادخال رقم الهاتف والباسورد لاتمام التسجيل",
                         overflow: false,
                       ),
                       SizedBox(
@@ -193,21 +193,23 @@ class _LoginPageState extends State<LoginScreen> {
       ),
     );
   }
+
   void loginProcess() async {
     if (phoneController.text.isNotEmpty &&
         passwordController.text.isNotEmpty &&
         _formKey.currentState!.validate()) {
-           ///login from hive Screen
-        User user=HiveOperations.getInstance().getUser();
-if(user.phone==phoneController.text&&user.password==passwordController.text){
-  Navigator.pushReplacement(context,
-      MaterialPageRoute(builder: (context) =>
-          HomeDetails()));
-}else{
-  ScaffoldMessenger.of(context).showSnackBar( const SnackBar(content:  Text("من فضلك تأكد من الايميل والباس ورد الخاصين بك"),backgroundColor: Colors.red,));
-
-}
-
+      ///login from hive Screen
+      User user = HiveOperations.getInstance().getUser();
+      if (user.phone == phoneController.text &&
+          user.password == passwordController.text) {
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => HomeDetails()));
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text("من فضلك تأكد من الايميل والباس ورد الخاصين بك"),
+          backgroundColor: Colors.red,
+        ));
+      }
     }
   }
 }

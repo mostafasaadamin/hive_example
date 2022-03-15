@@ -21,17 +21,23 @@ class HiveOperations{
 
   }
   void insertIntoHive(List<GetApprovedDetailsObjct>? clientsList) {
-    final contactsBox = Hive.box('Clients');
+    final contactsBox = Hive.lazyBox('Clients');
     contactsBox.clear();
     for (int i = 0; i < clientsList!.length; i++) {
+      print("objDetails${clientsList[i].aPPRVD}");
       contactsBox.add(clientsList[i]);
     }
   }
-  List<GetApprovedDetailsObjct>? readFromClientsTable(){
+  void updateClientsApproved(int index,GetApprovedDetailsObjct obj)
+  {
+    print("hiveUpdate${obj.aPPRVD}");
+    Hive.lazyBox('Clients').putAt(index, obj);
+  }
+  Future<List<GetApprovedDetailsObjct>>? readFromClientsTable()async{
     List<GetApprovedDetailsObjct>?  clientsList=[];
-    final contactsBox = Hive.box('Clients');
+    final contactsBox = Hive.lazyBox('Clients');
     for (int i = 0; i < contactsBox.length; i++) {
-      GetApprovedDetailsObjct client = contactsBox.get(i) as GetApprovedDetailsObjct;
+      GetApprovedDetailsObjct client =await  contactsBox.get(i) as GetApprovedDetailsObjct;
       clientsList.add(client);
     }
     return clientsList;

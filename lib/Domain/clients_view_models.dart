@@ -15,7 +15,7 @@ class ClientsViewModel extends ChangeNotifier {
    getClientsFromHive(String startData,String endDate)async{
      _clientList!.clear();
      notifyListeners();
-     _clientList= HiveOperations.getInstance().readFromClientsTable();
+     _clientList=await  HiveOperations.getInstance().readFromClientsTable();
      if(_clientList!.isEmpty){
        getClientsData( startData,endDate);
      }

@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:hive/hive.dart';
 import 'package:hive_example/Domain/use_cases/hive_operation.dart';
 
 import 'home_details.dart';
@@ -39,13 +40,33 @@ class _SplashScreenState extends State<SplashScreen> {
       return Scaffold(
         backgroundColor: Colors.white,
         body: Center(
-          child: Container(
-            child: Image.asset(
-              'assets/ultimate.jpg',
-              fit: BoxFit.fill,
-              width: 300.w,
-              height:300.h,
-            ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                child: Image.asset(
+                  'assets/ultimate.jpg',
+                  fit: BoxFit.fill,
+                  width: 300.w,
+                  height:300.h,
+                ),
+              ),
+              SizedBox(height:20.h),
+              FutureBuilder(
+                future: Hive.openLazyBox('Clients'),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.hasError) {
+                      return Text(snapshot.error.toString());
+                    } else {
+                      return Container();
+                    }
+                  } else {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                },
+              ),
+            ],
           ),
         ),
       );

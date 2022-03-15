@@ -40,20 +40,7 @@ class _State extends State<MyApp> {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          home: FutureBuilder(
-            future: Hive.openBox('Clients'),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                if (snapshot.hasError) {
-                  return Text(snapshot.error.toString());
-                } else {
-                  return SplashScreen();
-                }
-              } else {
-                return const Center(child: CircularProgressIndicator());
-              }
-            },
-          ),
+          home: SplashScreen()
         ),
       ),
     );

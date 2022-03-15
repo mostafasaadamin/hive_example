@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hive_example/Data/Models/clients.dart';
 import 'package:data_table_2/data_table_2.dart';
+import 'package:hive_example/Domain/use_cases/hive_operation.dart';
 class ClientsTable extends StatelessWidget {
   List<GetApprovedDetailsObjct>clientsData;
-  ClientsTable({required this.clientsData});
+  Function (int) onUpdate;
+  ClientsTable({required this.clientsData,required this.onUpdate});
   @override
   Widget build(BuildContext context) {
     return  Container(
@@ -47,12 +49,12 @@ class ClientsTable extends StatelessWidget {
                 DataCell(Text(clientsData[index].aPPRVDNM!)),
                 DataCell(
                   FlatButton(
-                    color:clientsData[index].aPPRVD==0? Colors.blue:Colors.grey,
+                    color:clientsData[index].aPPRVD==0? Colors.blue:Colors.green,
                     child: Text(clientsData[index].aPPRVD==0?
-                    'إعتماد':"إلغاء",style: const TextStyle(color: Colors.white),),
-                    onPressed: () {
-
-                    },
+                    'إعتماد':"معتمد",style: const TextStyle(color: Colors.white),),
+                    onPressed:clientsData[index].aPPRVD==0? () {
+                     onUpdate(index);
+                    }:(){},
                   ),
 
                 ),
