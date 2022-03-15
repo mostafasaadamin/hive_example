@@ -1,8 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:hive/hive.dart';
-import 'package:hive_example/Data/Models/approved_detais.dart';
-import 'package:hive_example/Data/Models/news.dart';
+import 'package:hive_example/Data/Models/clients.dart';
 import 'package:hive_example/Data/Services/clients_services.dart';
 
 class ClientsViewModel extends ChangeNotifier {
@@ -20,6 +19,8 @@ class ClientsViewModel extends ChangeNotifier {
       _clientList = await ClientsService().getClients(startData,endDate);
       if(_clientList!.isEmpty){
         _errorMessage="لا يوجد عملاء في الفترة المختارة";
+      }else{
+
       }
     } else {
       ///Load data From Hive Cashed if it exists
@@ -49,12 +50,12 @@ class ClientsViewModel extends ChangeNotifier {
     }
   }
 
-  void insertIntoHive(List<Articles>? newsList) {
-    // final contactsBox = Hive.box('News');
-    // contactsBox.clear();
-    // for (int i = 0; i < _newsList!.length; i++) {
-    //   contactsBox.add(_newsList![i]);
-    // }
+  void insertIntoHive(List<Articles>? clientsList) {
+    final contactsBox = Hive.box('News');
+    contactsBox.clear();
+    for (int i = 0; i < _newsList!.length; i++) {
+      contactsBox.add(_newsList![i]);
+    }
   }
 
 }

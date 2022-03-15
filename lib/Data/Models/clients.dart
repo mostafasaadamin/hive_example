@@ -1,4 +1,8 @@
-class ApprovedDetails {
+import 'package:hive/hive.dart';
+part 'clients.g.dart';
+
+
+class ApprovedDetails  {
   List<GetApprovedDetailsObjct>? lGetApprovedDetailsObjct;
   Result? rResult;
   ApprovedDetails({this.lGetApprovedDetailsObjct, this.rResult});
@@ -13,20 +17,33 @@ class ApprovedDetails {
     json['_Result'] != null ?  Result.fromJson(json['_Result']) : null;
   }
 }
-
-class GetApprovedDetailsObjct {
+@HiveType(typeId: 0)
+class GetApprovedDetailsObjct extends HiveObject {
+  @HiveField(0)
   int? aPPRVD;
+  @HiveField(1)
   String? aPPRVDDATE;
+  @HiveField(2)
   String? aPPRVDDESC;
+  @HiveField(3)
   String? aPPRVDNM;
+  @HiveField(4)
   String? dOCDATE;
+  @HiveField(5)
   String? dOCDESC;
+  @HiveField(6)
   int? dOCNO;
+  @HiveField(7)
   String? dOCSER;
+  @HiveField(8)
   int? dOCTYP;
+  @HiveField(9)
   String? dOCTYPNM;
+  @HiveField(10)
   String? lVLNM;
+  @HiveField(11)
   int? lVLNO;
+  @HiveField(12)
   int? oRDRNO;
 
   GetApprovedDetailsObjct(
